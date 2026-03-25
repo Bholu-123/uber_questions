@@ -206,11 +206,22 @@ body {
   flex: 1;
   display: flex;
   overflow-y: auto;
+  /* Paints grid as one layer so borders don’t drop out when scrolled (flex + 1px borders). */
+  -webkit-overflow-scrolling: touch;
 }
 .week-time-col {
   width: 64px;
   flex-shrink: 0;
   border-right: 1px solid #e2e8f0;
+  align-self: stretch;
+  min-height: 1200px; /* 24 × 50px hour rows */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent calc(50px - 1px),
+    #f1f5f9 calc(50px - 1px),
+    #f1f5f9 50px
+  );
 }
 .week-hour-label {
   height: 50px;
@@ -225,16 +236,27 @@ body {
 }
 .week-day-col {
   flex: 1;
-  border-right: 1px solid #e2e8f0;
+  align-self: stretch;
+  min-height: 1200px;
   position: relative;
   cursor: pointer;
+  /* Vertical rule: box-shadow paints reliably while scrolling (vs hairline border bugs). */
+  box-shadow: inset -1px 0 0 #e2e8f0;
+  background-color: #fff;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent calc(50px - 1px),
+    #f1f5f9 calc(50px - 1px),
+    #f1f5f9 50px
+  );
 }
 .week-hour-slot {
   height: 50px;
-  border-bottom: 1px solid #f1f5f9;
+  box-sizing: border-box;
 }
 .week-hour-slot:hover {
-  background: #f8fafc;
+  background: rgba(248, 250, 252, 0.85);
 }
 .week-event {
   position: absolute;
