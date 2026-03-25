@@ -7,18 +7,38 @@ export function useCirclesDemo() {
   const [dragging, setDragging] = useState(null); // { id, offsetX, offsetY }
   const svgRef = useRef(null);
   const idCounterRef = useRef(0);
+  /** True after pointer moved during an active drag; used to ignore the synthetic click after mouseup. */
+  const dragMovedRef = useRef(false);
+  /** Ignore the next click on the SVG root (e.g. mouseup on empty canvas after a drag). */
+  const suppressCanvasClickRef = useRef(false);
 
   const overlappingIds = useMemo(() => getOverlappingIds(circles), [circles]);
 
   const getSvgPoint = useCallback((e) => {
-    const rect = svgRef.current.getBoundingClientRect();
+    const svg = svgRef.current;
+    if (!svg) return { x: 0, y: 0 };
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    return { x: clientX - rect.left, y: clientY - rect.top };
+    const pt = svg.createSVGPoint();
+    pt.x = clientX;
+    pt.y = clientY;
+    const ctm = svg.getScreenCTM();
+    if (!ctm) {
+      const rect = svg.getBoundingClientRect();
+      return { x: clientX - rect.left, y: clientY - rect.top };
+    }
+    const p = pt.matrixTransform(ctm.inverse());
+    return { x: p.x, y: p.y };
   }, []);
 
   const addCircle = useCallback(
     (e) => {
+      // Only treat clicks directly on the SVG background as "add"; circle clicks bubble here otherwise.
+      if (e.target !== e.currentTarget) return;
+      if (suppressCanvasClickRef.current) {
+        suppressCanvasClickRef.current = false;
+        return;
+      }
       if (dragging) return;
       const { x, y } = getSvgPoint(e);
       const id = ++idCounterRef.current;
@@ -30,6 +50,7 @@ export function useCirclesDemo() {
   const startDrag = useCallback(
     (e, id) => {
       e.stopPropagation();
+      dragMovedRef.current = false;
       const { x, y } = getSvgPoint(e);
       const circle = circles.find((c) => c.id === id);
       if (!circle) return;
@@ -41,6 +62,7 @@ export function useCirclesDemo() {
   const moveDrag = useCallback(
     (e) => {
       if (!dragging) return;
+      dragMovedRef.current = true;
       const { x, y } = getSvgPoint(e);
       setCircles((prev) =>
         prev.map((c) =>
@@ -53,7 +75,11 @@ export function useCirclesDemo() {
     [dragging, getSvgPoint],
   );
 
-  const endDrag = useCallback(() => setDragging(null), []);
+  const endDrag = useCallback(() => {
+    if (dragMovedRef.current) suppressCanvasClickRef.current = true;
+    dragMovedRef.current = false;
+    setDragging(null);
+  }, []);
 
   const removeCircle = useCallback((e, id) => {
     e.stopPropagation();
