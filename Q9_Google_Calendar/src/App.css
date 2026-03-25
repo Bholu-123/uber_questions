@@ -182,6 +182,7 @@ body {
 .time-gutter {
   width: 64px;
   flex-shrink: 0;
+  border-right: 1px solid #e2e8f0;
 }
 .week-day-header {
   flex: 1;
@@ -192,7 +193,7 @@ body {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  border-left: 1px solid #e2e8f0;
+  border-right: 1px solid #e2e8f0;
 }
 .week-day-header--today {
   color: #3b82f6;
@@ -209,6 +210,7 @@ body {
 .week-time-col {
   width: 64px;
   flex-shrink: 0;
+  border-right: 1px solid #e2e8f0;
 }
 .week-hour-label {
   height: 50px;
@@ -223,7 +225,7 @@ body {
 }
 .week-day-col {
   flex: 1;
-  border-left: 1px solid #e2e8f0;
+  border-right: 1px solid #e2e8f0;
   position: relative;
   cursor: pointer;
 }
