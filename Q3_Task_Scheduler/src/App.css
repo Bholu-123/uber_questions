@@ -1,0 +1,29 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f8fafc; color: #1e293b; }
+.container { max-width: 900px; margin: 32px auto; padding: 24px; }
+.title { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+.subtitle { color: #64748b; margin-bottom: 20px; }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-bottom: 24px; padding: 16px; background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; }
+label { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+input[type=range] { accent-color: #3b82f6; width: 100px; }
+.btn { padding: 9px 18px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
+.btn--blue { background: #3b82f6; color: #fff; }
+.btn--purple { background: #7c3aed; color: #fff; }
+.btn--gray { background: #e2e8f0; color: #475569; }
+.panels { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.panel { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; }
+.panel h2 { font-size: 16px; margin-bottom: 12px; color: #374151; }
+.task-grid { display: flex; flex-wrap: wrap; gap: 8px; max-height: 300px; overflow-y: auto; }
+.task-chip { display: flex; flex-direction: column; align-items: center; padding: 8px 12px; border-radius: 8px; font-size: 12px; border: 1.5px solid #e2e8f0; min-width: 60px; }
+.task-chip-id { font-weight: 700; font-size: 13px; }
+.task-chip-state { font-size: 11px; color: #64748b; }
+.task-chip--start { background: #eff6ff; border-color: #3b82f6; }
+.task-chip--success { background: #f0fdf4; border-color: #22c55e; }
+.task-chip--error { background: #fef2f2; border-color: #ef4444; }
+.task-chip--queued { background: #fefce8; border-color: #eab308; }
+.task-chip--scheduled { background: #f5f3ff; border-color: #7c3aed; }
+.task-chip--cancelled { background: #fff7ed; border-color: #f97316; }
+.log { display: flex; flex-direction: column; gap: 4px; max-height: 300px; overflow-y: auto; font-size: 13px; }
+.log-entry { display: flex; gap: 8px; padding: 4px 0; border-bottom: 1px solid #f1f5f9; }
+.log-time { color: #94a3b8; flex-shrink: 0; font-size: 11px; padding-top: 1px; }
+.empty { color: #94a3b8; font-size: 14px; padding: 20px; text-align: center; width: 100%; }
