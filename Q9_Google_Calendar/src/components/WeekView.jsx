@@ -47,7 +47,10 @@ export function WeekView({
               className="week-day-col"
               onClick={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
-                const h = Math.floor((e.clientY - rect.top) / 50);
+                const h = Math.max(
+                  0,
+                  Math.min(23, Math.floor((e.clientY - rect.top) / 50)),
+                );
                 onCreate({ date: d, startH: h });
               }}
             >

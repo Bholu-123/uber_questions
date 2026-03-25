@@ -2,6 +2,13 @@ import { useState } from "react";
 import { HOURS } from "../constants/config";
 import { formatTime } from "../hooks/dateUtils";
 
+function toLocalDateInputValue(dateObj) {
+  const y = dateObj.getFullYear();
+  const m = String(dateObj.getMonth() + 1).padStart(2, "0");
+  const d = String(dateObj.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
 export function EventModal({
   initial,
   colors,
@@ -13,19 +20,21 @@ export function EventModal({
 }) {
   const [title, setTitle] = useState(initial?.title || "");
   const [date, setDate] = useState(
-    initial?.date
-      ? initial.date.toISOString().slice(0, 10)
-      : new Date().toISOString().slice(0, 10),
+    toLocalDateInputValue(initial?.date ?? new Date()),
   );
   const [startH, setStartH] = useState(initial?.startH ?? 9);
-  const [endH, setEndH] = useState(initial?.endH ?? 10);
+  const [endH, setEndH] = useState(
+    initial?.endH ?? Math.min((initial?.startH ?? 9) + 1, 23),
+  );
   const [color, setColor] = useState(initial?.color || defaultColor);
+  const endHourOptions = HOURS.filter((h) => h > Number(startH));
 
   const handleSave = () => {
     if (!title.trim()) return;
+    const [year, month, day] = date.split("-").map(Number);
     onSave({
       title: title.trim(),
-      date: new Date(`${date}T12:00:00`),
+      date: new Date(year, month - 1, day, 12, 0, 0),
       startH: Number(startH),
       endH: Math.max(Number(endH), Number(startH) + 1),
       color,
@@ -68,7 +77,13 @@ export function EventModal({
               <select
                 className="field"
                 value={startH}
-                onChange={(e) => setStartH(Number(e.target.value))}
+                onChange={(e) => {
+                  const nextStart = Number(e.target.value);
+                  setStartH(nextStart);
+                  if (Number(endH) <= nextStart) {
+                    setEndH(Math.min(nextStart + 1, 23));
+                  }
+                }}
               >
                 {HOURS.map((h) => (
                   <option key={h} value={h}>
@@ -84,7 +99,7 @@ export function EventModal({
                 value={endH}
                 onChange={(e) => setEndH(Number(e.target.value))}
               >
-                {HOURS.slice(1).map((h) => (
+                {endHourOptions.map((h) => (
                   <option key={h} value={h}>
                     {formatTime(h)}
                   </option>
