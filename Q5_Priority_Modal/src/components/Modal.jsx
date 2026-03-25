@@ -2,16 +2,17 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { priorityColor } from "../constants/priorityColor";
 
-export function Modal({ modal, onClose }) {
+export function Modal({ modal, onClose, isTopmost }) {
   const overlayRef = useRef(null);
 
   useEffect(() => {
+    if (!isTopmost) return;
     const handler = (e) => {
       if (e.key === "Escape") onClose(modal.id);
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [modal.id, onClose]);
+  }, [isTopmost, modal.id, onClose]);
 
   useEffect(() => {
     overlayRef.current?.querySelector("button")?.focus();

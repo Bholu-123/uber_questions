@@ -1,6 +1,12 @@
+import { createPortal } from "react-dom";
+
 export function OpenButtons({ presets, onOpen }) {
-  return (
-    <div className="open-btns">
+  return createPortal(
+    <div
+      className="open-btns open-btns--floating"
+      role="toolbar"
+      aria-label="Open demo modals"
+    >
       {presets.map((p) => (
         <button
           key={p.label}
@@ -11,6 +17,7 @@ export function OpenButtons({ presets, onOpen }) {
           Open {p.label}
         </button>
       ))}
-    </div>
+    </div>,
+    document.body,
   );
 }

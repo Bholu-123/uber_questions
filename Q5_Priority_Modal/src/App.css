@@ -36,6 +36,21 @@ kbd {
   flex-wrap: wrap;
   margin-bottom: 24px;
 }
+.open-btns--floating {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1100;
+  margin: 0;
+  max-width: min(680px, calc(100vw - 32px));
+  padding: 12px 16px;
+  justify-content: center;
+  background: rgba(248, 250, 252, 0.97);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(15, 23, 42, 0.18);
+}
 .btn {
   padding: 10px 20px;
   border: none;
