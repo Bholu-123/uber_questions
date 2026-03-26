@@ -1,0 +1,29 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.image-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.image-list > div {
+  flex: 1 33%;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.image-list > div img {
+  width: 100%;
+  border: 3px solid gray;
+}
+
+.image-list > div.active img {
+  border-color: skyblue;
+}

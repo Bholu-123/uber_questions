@@ -1,0 +1,55 @@
+.slider {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.slide {
+  position: relative;
+  display: none;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.slide.active {
+  display: block;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+.slide span {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+}
+
+.slide img {
+  width: 100%;
+}
+
+.navigation-next-prev .next-prev {
+  position: absolute;
+  top: 50%;
+  font-size: 1.5em;
+  cursor: pointer;
+  transform: translateY(-100%);
+  z-index: 10000;
+  color: #fff;
+}
+
+.next {
+  right: 10px;
+}
+
+.prev {
+  left: 10px;
+}
