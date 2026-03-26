@@ -1,0 +1,54 @@
+.container {
+    max-width: 500px;
+    margin: 40px auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  .btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 16px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .bars {
+    margin-top: 20px;
+  }
+  
+  .empty {
+    text-align: center;
+    color: gray;
+  }
+  
+  .bar-card {
+    margin-bottom: 16px;
+  }
+  
+  .bar-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  
+  .track {
+    width: 100%;
+    height: 10px;
+    background: #e5e7eb;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  
+  .fill {
+    height: 100%;
+    background: #2563eb;
+    transition: width 50ms linear;
+  }
